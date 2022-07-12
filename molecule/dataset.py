@@ -1,10 +1,21 @@
 import logging
+from enum import Enum
 import numpy as np
 import pandas as pd
+
 from sklearn.preprocessing import OneHotEncoder
 
-from molecule.preprocessing.text_feature_extractor import get_bag_of_words_encoder, smiles_to_one_hot_array
-from molecule.preprocessing.morgan_feature_extractor import fingerprint_features
+from molecule.predictors.feature_extractors import (bag_of_words_encoder,
+            smiles_to_one_hot_array_features, fingerprint_features)
+
+
+class FeatureType(Enum):
+    """
+    Represents choices for type of features (and therefore model architecture)
+    """
+    MORGAN = 1
+    SMILE = 2
+
 
 class Dataset():
     """
@@ -31,38 +42,58 @@ class Dataset():
         """Return size of dataset"""
         return self.dataframe.shape[0]
 
-
-    def get_labels(self) -> np.ndarray:
-        """Return labels: numpy array of ints of shape (self.size,)"""
-        return self.dataframe['P1'].to_numpy()
-
-    def get_smiles(self) -> np.ndarray:
-        """Return SMILE representations: numpy array of strings of shape (self.size,)"""
-        return self.dataframe['smiles'].to_numpy()
-
-    def get_features_morgan_fingerprint(self) -> np.ndarray:
-        """
-        Return Morgan fingerprints representation of SMILEs:
-        numpy array of shape (self.size, 2048)
-        """
-        smiles = self.get_smiles()
-        fingerprints = np.array([fingerprint_features(smile).ToList() for smile in smiles])
-        return fingerprints
-
-
-    def get_features_bag_of_words(self) -> np.ndarray:
-        """
-        Return bag-of-words representation of SMILEs:
-        numpy array of shape (self.size, sequence_length, vocab_size)
-        """
-        smiles = self.get_smiles()
+    @property
+    def vocab_size(self) -> int:
+        """Return size of vocabulary, i.e. number of distinct characters in SMILEs representations"""
         if self.encoder is None:
             logging.info(
                 'No encoder found. ' \
                 'Fitting bag-of-words model to provided data and saving it for future use.'
             )
-            self.encoder = get_bag_of_words_encoder(smiles)
+            self.encoder = bag_of_words_encoder(self.smiles)
+        vocab_size = self.encoder.categories_[0].shape[0]
+        return vocab_size
+
+    @property
+    def labels(self) -> np.ndarray:
+        """Return labels: numpy array of ints of shape (self.size,)"""
+        return self.dataframe['P1'].to_numpy()
+
+    @property
+    def smiles(self) -> np.ndarray:
+        """Return SMILE representations: numpy array of strings of shape (self.size,)"""
+        return self.dataframe['smiles'].to_numpy()
+
+    def get_features(self, feature_type=FeatureType.MORGAN) -> np.ndarray:
+        """
+        Return
+        """
+        if feature_type == FeatureType.MORGAN:
+            return self._get_features_morgan_fingerprint()
+        else:
+            return self._get_features_bag_of_words()
+
+    def _get_features_morgan_fingerprint(self) -> np.ndarray:
+        """
+        Return Morgan fingerprints representation of SMILEs:
+        numpy array of shape (self.size, 2048)
+        """
+        fingerprints = np.array([fingerprint_features(smile).ToList() for smile in self.smiles])
+        return fingerprints
+
+
+    def _get_features_bag_of_words(self) -> np.ndarray:
+        """
+        Return bag-of-words representation of SMILEs:
+        numpy array of shape (self.size, sequence_length, vocab_size)
+        """
+        if self.encoder is None:
+            logging.info(
+                'No encoder found. ' \
+                'Fitting bag-of-words model to provided data and saving it for future use.'
+            )
+            self.encoder = bag_of_words_encoder(self.smiles)
         else:
             logging.info('Using existing bag-of-words encoder.')
-        bag_of_words = smiles_to_one_hot_array(smiles, self.encoder)
+        bag_of_words = smiles_to_one_hot_array_features(self.smiles, self.encoder)
         return bag_of_words
