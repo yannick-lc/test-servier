@@ -1,20 +1,14 @@
 import logging
 from enum import Enum
+from typing import Union
 import numpy as np
 import pandas as pd
-
 from sklearn.preprocessing import OneHotEncoder
 
+from molecule.model import FeatureType
 from molecule.predictors.feature_extractors import (bag_of_words_encoder,
             smiles_to_one_hot_array_features, fingerprint_features)
 
-
-class FeatureType(Enum):
-    """
-    Represents choices for type of features (and therefore model architecture)
-    """
-    MORGAN = 1
-    SMILE = 2
 
 
 class Dataset():
@@ -23,10 +17,10 @@ class Dataset():
     Contains functions to obtain feature representation etc
     """
 
-    def __init__(self, dataframe: pd.DataFrame, encoder: OneHotEncoder=None) -> None:
+    def __init__(self, data: Union[pd.DataFrame, str], encoder: OneHotEncoder=None) -> None:
         """
-        Initialize the dataset from provided data.
-        Assumptions: dataframe contains at least columns:
+        Initialize the dataset either from a pandas dataframe, or from the path to a csv file.
+        Assumptions: the dataframe (or the csv) contains at least columns:
             - 'smiles' [str]: SMILE representation of molecule, e.g. 'Cn1ccnc1SCC(=O)Nc1ccc(Oc2ccccc2)cc1'
             - 'P1' [int]: whether molecule has property P1: 1 if yes, 0 otherwise
         
@@ -34,7 +28,12 @@ class Dataset():
         It can be provided if the objective is to evaluate a trained model.
         Otherwise, it will be fitted to the data if necessary.
         """
-        self.dataframe = dataframe
+        if type(data) is pd.DataFrame:
+            self.dataframe = data
+        elif type(data) is str:
+            self.dataframe = pd.read_csv(data)
+        else:
+            raise ValueError("'data' must be of type pandas.DataFrame or a path (str) to a csv file.")
         self.encoder = encoder
 
     @property
