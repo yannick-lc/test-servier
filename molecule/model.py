@@ -34,7 +34,6 @@ class Model:
         and load weights of pre-trained model if state_dict (path to zip file) is specified.
         """
         torch.manual_seed(42) # setting random seed for reproducibility
-        #self.feature_type = feature_type
         if feature_type == FeatureType.MORGAN:
             self.net = ModelMorgan()
         else:

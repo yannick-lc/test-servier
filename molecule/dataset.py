@@ -46,8 +46,8 @@ class Dataset():
         """Return size of vocabulary, i.e. number of distinct characters in SMILEs representations"""
         if self.encoder is None:
             logging.info(
-                'No encoder found. ' \
-                'Fitting bag-of-words model to provided data and saving it for future use.'
+                'No one-hot word encoder found. ' \
+                'Fitting model to provided data and saving it for future use.'
             )
             self.encoder = bag_of_words_encoder(self.smiles)
         vocab_size = self.encoder.categories_[0].shape[0]
