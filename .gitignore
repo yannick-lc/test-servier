@@ -3,3 +3,5 @@ notes.txt
 __pycache__
 notebooks
 .ipynb_checkpoints
+images/CID*
+data/output/*

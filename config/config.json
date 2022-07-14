@@ -1,3 +1,7 @@
 {
-    "vocabulary": "#()+-/123456=BCFHNOS[\\]clnors"
+    "vocabulary": "#()+-/123456=BCFHNOS[\\]clnors",
+    "default_path_to_model_save": "models/latest_saved_model.pth",
+    "default_path_to_train_dataset": "data/datasets/dataset_single_train.csv",
+    "default_path_to_test_dataset": "data/datasets/dataset_single_test.csv",
+    "default_path_to_save_predictions": "data/output/predictions.csv"
 }

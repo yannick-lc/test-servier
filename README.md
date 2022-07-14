@@ -1,6 +1,7 @@
 # test-servier
 
-![Molecules illustration](https://github.com/yannick-lc/test-servier/tree/main/data/images/banner.png)
+![Molecules illustration](https://github.com/yannick-lc/test-servier/blob/main/data/images/banner.png)
+
 
 Technical test for Servier
 
@@ -21,7 +22,6 @@ Install dependencies using pip and install local packages:
 
 ```bash
 pip install -r requirements.txt
-pip install -e .
 ```
 
 ## How to run
@@ -32,14 +32,17 @@ servier train
 servier evaluate
 ```
 
-You can similarly use keywords 'evaluate' and 'predict' instead of 'train'.
+You can similarly use keyword 'predict' instead of 'train'.
+
+Use pre-trained model to make predictions on a dataset using the model based on SMILE text representations:
+```bash
+servier predict --dataset data/datasets/dataset_single_test.csv --predictions data/output/predictions_single_test.csv --model models/model_smile.pth --features smile
+```
 
 More information regarding the accepted input parameters can be obtained with
 ```bash
 servier --help
 ```
-
-**Note**: nothing is implemented so far, so this won't do anything.
 
 Dockerization is coming soon.
 
@@ -47,6 +50,7 @@ Dockerization is coming soon.
 
 Two deep learning models are available:
 - a 3-layer fully-connected network based on Morgan fingerprints of the molecules.
+- a 2-layer LSTM based on the text representations (SMILE) of the molecules.
 
 ## Performance
 
