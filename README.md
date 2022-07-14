@@ -1,6 +1,6 @@
 # test-servier
 
-![Molecules illustration](https://github.com/yannick-lc/test-servier/tree/main/data/images/banner.png)
+![Molecules illustration](https://github.com/yannick-lc/test-servier/blob/main/data/images/banner.png)
 
 Technical test for Servier
 
