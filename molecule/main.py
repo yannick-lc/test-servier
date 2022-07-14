@@ -1,6 +1,28 @@
 import argparse
+from pathlib import Path
 
-def main():
+from molecule.model import FeatureType, Model
+from molecule.dataset import Dataset
+
+
+def get_project_root_directory() -> Path:
+    """Return project root directory"""
+    return Path(__file__).parent.parent
+
+def train_model(feature_type: FeatureType, path_dataset: str, path_model: str=None) -> Model:
+    """
+    Train and return model
+    Also sometimes saves the model
+    """
+    model = Model(feature_type)
+    dataset = Dataset(path_dataset)
+    X, y = dataset.get_features(feature_type), dataset.labels
+    model.fit(X, y, validation_set_ratio=0.)
+    if path_model is not None:
+        pass
+    return model
+
+def main() -> None:
     """
     Entry point of the program.
     Parse arguments and call relevant parts based on arguments.

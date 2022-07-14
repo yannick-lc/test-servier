@@ -5,11 +5,8 @@ from enum import Enum
 from tqdm import tqdm
 import numpy as np
 import sklearn
-from sklearn.model_selection import train_test_split
 import torch
-import torch.nn as nn
-from torch.utils.data import TensorDataset
-from torch.utils.data import DataLoader
+from torch.utils.data import TensorDataset, DataLoader
 
 from molecule.predictors.deep_architectures import ModelMorgan, ModelSmile
 
@@ -39,23 +36,23 @@ class Model:
         else:
             self.net = ModelSmile()
         if state_dict is not None:
-            logging.info(f'Loading state dict located at {state_dict}...')
+            logging.info(f"Loading state dict located at {state_dict}...")
             self.net.load_state_dict(torch.load(state_dict))
         self._load_training_config()
 
         if torch.cuda.is_available():
-            self.device = 'cuda'
-            logging.info('Using CUDA for training and inference.')
+            self.device = "cuda"
+            logging.info("Using CUDA for training and inference.")
         else:
-            self.device = 'cpu'
-            logging.warning('CUDA is not available, using CPU only (may be slow during training).')
+            self.device = "cpu"
+            logging.warning("CUDA is not available, using CPU only (may be slow during training).")
         self.net.to(self.device)
 
     def _load_training_config(self) -> None:
         """
         Load training settings based on model architecture
         """
-        self.loss_fn = nn.CrossEntropyLoss()
+        self.loss_fn = torch.nn.CrossEntropyLoss()
         self.optimizer = self.net.optimizer(self.net.parameters(), self.net.learning_rate)
         self.BATCH_SIZE = self.net.batch_size
         self.EPOCHS = self.net.n_epochs
@@ -66,7 +63,7 @@ class Model:
         and return training losses, validation losses and val ROC AUCs if validation_set_ratio > 0
         """
         if validation_set_ratio > 0.:
-            X_train, X_val, y_train, y_val = train_test_split(X, y,
+            X_train, X_val, y_train, y_val = sklearn.model_selection.train_test_split(X, y,
                         test_size=validation_set_ratio, random_state=42)
             X_val_tensor = torch.FloatTensor(X_val).to(self.device)
             y_val_tensor = torch.LongTensor(y_val).to(self.device)
@@ -127,7 +124,7 @@ class Model:
         """
         self.net.eval() # deactivate dropout etc
         predicted_activations = self.net(torch.FloatTensor(X).to(self.device))
-        predicted_probas = nn.Softmax(dim=1)(predicted_activations)[:,1]
+        predicted_probas = torch.nn.Softmax(dim=1)(predicted_activations)[:,1]
         return predicted_probas.detach().cpu().numpy()
 
     def predict(self, X: np.ndarray, decision_threshold: float=0.5) -> np.ndarray:
