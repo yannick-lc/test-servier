@@ -7,3 +7,4 @@ images/CID*
 data/output/*
 .vscode
 .pytest_cache
+runs

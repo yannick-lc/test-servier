@@ -1,11 +1,11 @@
 # Test Servier
 
+![Python version](https://img.shields.io/badge/python-v3.7-blue)
+![Platform version](https://img.shields.io/badge/platform-linux-lightgrey)
+
 ![Molecules illustration](https://github.com/yannick-lc/test-servier/blob/main/data/images/banner.png)
 
 **Author**: Yannick Le Cacheux
-
-![Python version](https://img.shields.io/badge/python-v3.7-blue)
-![Platform version](https://img.shields.io/badge/platform-linux-lightgrey)
 
 ## How to install
 
@@ -66,17 +66,25 @@ Some of the tests (those in files postfixed with "*from_data.py*") rely on sampl
 
 Two deep learning models are available:
 - a 3-layer fully-connected network based on Morgan fingerprints of the molecules.
-- a 2-layer LSTM based on the text representations (SMILE) of the molecules.
+- a 2-layer RNN (GRU) based on the text representations (SMILE) of the molecules.
 
 Models are relatively light-weight (up to a dozen of MB) so weights of pre-trained model have been included in *models/*.
 
+Below is a brief overview of the architectures of the 2 models:
+![Models illustration](https://github.com/yannick-lc/test-servier/blob/main/data/images/DNNs.png)
+
+*Left: Fully connected model used on Morgan fingerprint features. Right: RNN used on features based on text representation.*
+
+More information are provided in the notebooks (*notebooks/* folder) and the file defining the architecture of the models (*molecule/prediction/deep_architectures.py*).
+
 ### Performance
 
-Coming soon
+As detailed in "*notebooks/1 - Exploration*", since the dataset is imbalanced, accuracy is not a good metrics. The "default" metrics used is thus the Area Under Curve (AUC) of the Receiver Operation Charactistic (ROC) curve.
 
-### Process
+Below are the ROC curves and AUCs of the 2 models above:
+![ROC curves](https://github.com/yannick-lc/test-servier/blob/main/data/images/ROCs.png)
 
-More information, figures and baselines regarding the exploration and training process are provided in the 3 notebooks in *notebooks/*.
+More metrics, figures and baselines regarding the exploration, training and evaluation process are provided in the 3 notebooks in *notebooks/*.
 
 ## To do
 
