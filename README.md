@@ -4,10 +4,10 @@
 
 **Author**: Yannick Le Cacheux
 
-## How to install
-
 ![Python version](https://img.shields.io/badge/python-v3.7-blue)
 ![Platform version](https://img.shields.io/badge/platform-linux-lightgrey)
+
+## How to install
 
 Requires Python 3.7
 *(Python 3.6 has reached end of security support in December 2021, Rdkit, PyTorch etc do not seem well supported with Python 3.6).*
@@ -44,7 +44,7 @@ servier predict --dataset data/datasets/dataset_single_test.csv \
 --features smile
 ```
 
-More information regarding the accepted input parameters can be obtained with
+More information regarding the accepted input parameters can be obtained with:
 ```bash
 servier --help
 ```

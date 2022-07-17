@@ -1,5 +1,9 @@
+"""
+Contains the definitions of the deep learning architectures of the models used.
+"""
+
 import torch
-import torch.nn as nn
+from torch import nn
 
 class ModelMorgan(nn.Module):
     """
@@ -18,7 +22,7 @@ class ModelMorgan(nn.Module):
         dropout_rate: probability to randomly drop a neuron in the layers in which
         dropout is activated
         """
-        super(ModelMorgan, self).__init__()
+        super().__init__()
         self.linear_relu_stack = nn.Sequential(
             nn.Linear(2048, dim_hidden),
             nn.ReLU(),
@@ -57,7 +61,7 @@ class ModelSmile(nn.Module):
         vocab_size: number of words (distinct characters) in the vocabulary,
         determines the dimension of the input
         """
-        super(ModelSmile, self).__init__()
+        super().__init__()
         self.lstm = nn.LSTM(input_size=vocab_size, hidden_size=dim_lstm,
                             num_layers=3, batch_first=True, bidirectional=True, dropout=dropout_rate)
         self.fc = nn.Linear(dim_lstm, 2)

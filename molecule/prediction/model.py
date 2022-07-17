@@ -1,11 +1,16 @@
+"""
+Contains "low-level" functions related to training a deep learning architecture,
+such as performing stochastic gradient descent, or making predictions with a trained model.
+"""
+
 import logging
-from typing import List, Tuple, Optional
+from typing import Tuple, Optional
 from enum import Enum
 
 from tqdm import tqdm
 import numpy as np
 import sklearn
-# from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 
@@ -14,16 +19,15 @@ from molecule.prediction.deep_architectures import ModelMorgan, ModelSmile
 
 
 class FeatureType(Enum):
-    """
-    Represents choices for type of features (and therefore model architecture)
-    """
+    """Represents choices for type of features (and therefore model architecture)"""
     MORGAN = 1
     SMILE = 2
 
 
 class Model:
     """
-    Deep learning model
+    Represents the deep learning model.
+    Contains functions to train the model, make predictions, load / save models etc
     """
 
     def __init__(self, feature_type=FeatureType.MORGAN, path_to_state_dict: str=None):

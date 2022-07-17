@@ -1,3 +1,9 @@
+""""
+Load configuration information (e.g., default location to save the model) from file
+so that it can then be used by various parts of the program.
+Also used to configure logging etc.
+"""
+
 import os
 import json
 import logging
@@ -15,9 +21,9 @@ def get_project_root_directory() -> Path:
 def get_config(path_to_config_file: str=PATH_TO_DEFAULT_CONFIG_FILE) -> Dict[str, str]:
     """Return config information (e.g. default save path etc) in the form of a dictionary"""
     if not os.path.isabs(path_to_config_file):
-       root_dir = get_project_root_directory()
-       path_to_config_file = os.path.join(root_dir, path_to_config_file)
-    with open(path_to_config_file) as f:
+        root_dir = get_project_root_directory()
+        path_to_config_file = os.path.join(root_dir, path_to_config_file)
+    with open(path_to_config_file, "r") as f:
         config = json.load(f)
     return config
 

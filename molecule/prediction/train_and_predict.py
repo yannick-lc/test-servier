@@ -1,5 +1,5 @@
 """
-Contains functions to train and evaluate models
+Contains "high-level" functions to train and evaluate models.
 """
 
 import logging

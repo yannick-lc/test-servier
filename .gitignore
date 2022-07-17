@@ -5,3 +5,5 @@ notebooks
 .ipynb_checkpoints
 images/CID*
 data/output/*
+.vscode
+.pytest_cache

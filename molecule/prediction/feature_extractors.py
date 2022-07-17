@@ -1,5 +1,7 @@
-import logging
-import json
+"""
+Contains classes and utilities to extract features from data
+"""
+
 from typing import List
 
 import numpy as np
@@ -66,7 +68,6 @@ class SmileFeatureExtractor:
         for smile in smiles:
             one_hot_array = self.encode_smile(smile, target_length=max_length)
             one_hot_arrays.append(one_hot_array)
-        
         result = np.stack(one_hot_arrays)
         return result
 
@@ -102,6 +103,5 @@ class MorganFingerprintFeatureExtractor:
         for smile in smiles:
             fingerprint_array = self.extract_fingerprint(smile)
             fingerprint_arrays.append(fingerprint_array)
-        
         result = np.stack(fingerprint_arrays)
         return result
