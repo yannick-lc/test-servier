@@ -53,18 +53,18 @@ class ModelSmile(nn.Module):
     optimizer = torch.optim.Adam
     learning_rate = 1e-3
     batch_size = 100
-    n_epochs = 15
+    n_epochs = 50
 
-    def __init__(self, dim_lstm=64, vocab_size=29, dropout_rate=0.5):
+    def __init__(self, dim_hidden=16, vocab_size=29, dropout_rate=0.5):
         """
-        lstm_size: dimension of the hidden state of the LSTM
+        dim_hidden: dimension of the hidden state of the GRU
         vocab_size: number of words (distinct characters) in the vocabulary,
         determines the dimension of the input
         """
         super().__init__()
-        self.lstm = nn.LSTM(input_size=vocab_size, hidden_size=dim_lstm,
-                            num_layers=3, batch_first=True, bidirectional=True, dropout=dropout_rate)
-        self.fc = nn.Linear(dim_lstm, 2)
+        self.gru = nn.GRU(input_size=vocab_size, hidden_size=dim_hidden,
+                           num_layers=2, batch_first=True, bidirectional=True, dropout=dropout_rate)
+        self.linear = nn.Linear(dim_hidden, 2)
         self.activation = nn.ReLU()
      
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -75,8 +75,7 @@ class ModelSmile(nn.Module):
             - output shape: (batch_size, n_classes)
             (with n_classes=2)
         """
-        _, (h_n, c_n) = self.lstm(x)
-        last_state = c_n[-1]
-        res = self.activation(last_state)
-        res = self.fc(res)
+        _, h_n = self.gru(x)
+        last_state = h_n[-1]
+        res = self.linear(self.activation(last_state))
         return res

@@ -39,7 +39,7 @@ You can similarly use keyword 'predict' instead of 'train'.
 Use pre-trained model to make predictions on a dataset using the model based on SMILE text representations:
 ```bash
 servier predict --dataset data/datasets/dataset_single_test.csv \
---predictions data/output/predictions_single_test.csv \
+--output data/output/predictions_single_test.csv \
 --model models/model_smile.pth \
 --features smile
 ```
