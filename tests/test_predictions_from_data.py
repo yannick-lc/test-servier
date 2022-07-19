@@ -11,8 +11,8 @@ As such, PERFORMANCE IS NOT REPRESENTATIVE.
 import pytest
 import numpy as np
 
-from molecule.prediction.model import FeatureType
-from molecule.prediction.model import Model
+from molecule.preprocess.feature_extraction import FeatureType
+from molecule.train.model import Model
 from test_features_from_data import absolute_path, sample_morgan_features, sample_smile_features
 
 @pytest.fixture

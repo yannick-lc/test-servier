@@ -3,6 +3,7 @@ Contains classes and utilities to extract features from data
 """
 
 from typing import List
+from enum import Enum
 
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
@@ -10,6 +11,12 @@ from rdkit.Chem import rdMolDescriptors, MolFromSmiles, rdmolfiles, rdmolops
 from rdkit.DataStructs.cDataStructs import ExplicitBitVect
 
 from molecule.config import configuration
+
+
+class FeatureType(Enum):
+    """Represents choices for type of features (and therefore model architecture)"""
+    MORGAN = 1
+    SMILE = 2
 
 
 class SmileFeatureExtractor:

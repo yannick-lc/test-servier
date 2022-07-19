@@ -16,7 +16,7 @@ PATH_TO_DEFAULT_CONFIG_FILE = "config/config.json"
 
 def get_project_root_directory() -> Path:
     """Return project root directory"""
-    return Path(__file__).parent.parent
+    return Path(__file__).parent.parent.parent
 
 def get_config(path_to_config_file: str=PATH_TO_DEFAULT_CONFIG_FILE) -> Dict[str, str]:
     """Return config information (e.g. default save path etc) in the form of a dictionary"""

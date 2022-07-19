@@ -6,8 +6,9 @@ from typing import Union
 import numpy as np
 import pandas as pd
 
-from molecule.prediction.model import FeatureType
-from molecule.prediction.feature_extractors import MorganFingerprintFeatureExtractor, SmileFeatureExtractor
+from molecule.preprocess.feature_extraction import (
+    FeatureType, MorganFingerprintFeatureExtractor, SmileFeatureExtractor
+)
 
 
 class Dataset:

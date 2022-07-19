@@ -6,8 +6,9 @@ Contains entry point of the program.
 import argparse
 
 from molecule.config import configuration, PATH_TO_DEFAULT_CONFIG_FILE
-from molecule.prediction.model import FeatureType
-from molecule.prediction.train_and_predict import train, predict, evaluate
+from molecule.preprocess.feature_extraction import FeatureType
+from molecule.train.train import train_on_dataset
+from molecule.predict.predict import predict_from_dataset, evaluate_on_dataset
 
 
 def main() -> None:
@@ -45,16 +46,16 @@ def main() -> None:
 
     # Train
     if args.action == "train":
-        train(feature_type, args.dataset, args.model)
+        train_on_dataset(feature_type, args.dataset, args.model)
     # Predict
     elif args.action == "predict":
         output_path = args.output
         if output_path is None: # use default path to save predictions
             output_path = configuration["default_path_to_save_predictions"]
-        predict(feature_type, args.dataset, args.model, output_path)
+        predict_from_dataset(feature_type, args.dataset, args.model, output_path)
     # Evaluate
     else:
-        evaluate(feature_type, args.dataset, args.model)
+        evaluate_on_dataset(feature_type, args.dataset, args.model)
 
 
 if __name__ == "__main__":

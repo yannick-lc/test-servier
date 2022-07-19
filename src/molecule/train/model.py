@@ -12,16 +12,12 @@ import numpy as np
 import sklearn
 from sklearn.model_selection import train_test_split
 import torch
+from torch import FloatTensor, LongTensor
 from torch.utils.data import TensorDataset, DataLoader
 
 from molecule.config import configuration
-from molecule.prediction.deep_architectures import ModelMorgan, ModelSmile
-
-
-class FeatureType(Enum):
-    """Represents choices for type of features (and therefore model architecture)"""
-    MORGAN = 1
-    SMILE = 2
+from molecule.preprocess.feature_extraction import FeatureType
+from molecule.train.deep_architectures import ModelMorgan, ModelSmile
 
 
 class Model:
@@ -92,12 +88,12 @@ class Model:
         if validation_set_ratio > 0.:
             X_train, X_val, y_train, y_val = sklearn.model_selection.train_test_split(X, y,
                         test_size=validation_set_ratio, random_state=42)
-            X_val_tensor = torch.FloatTensor(X_val).to(self.device)
-            y_val_tensor = torch.LongTensor(y_val).to(self.device)
+            X_val_tensor = FloatTensor(X_val).to(self.device)
+            y_val_tensor = LongTensor(y_val).to(self.device)
         else:
             X_train, y_train = X, y
 
-        train_dataset = TensorDataset(torch.FloatTensor(X_train), torch.LongTensor(y_train))
+        train_dataset = TensorDataset(FloatTensor(X_train), LongTensor(y_train))
         dataloader = DataLoader(train_dataset, batch_size=self.BATCH_SIZE)
 
         train_losses, val_losses, val_aucs = [], [], []
@@ -149,7 +145,7 @@ class Model:
         Predict class probabilities between 0 and 1
         """
         self.net.eval() # deactivate dropout etc
-        predicted_activations = self.net(torch.FloatTensor(X).to(self.device))
+        predicted_activations = self.net(FloatTensor(X).to(self.device))
         predicted_probas = torch.nn.Softmax(dim=1)(predicted_activations)[:,1]
         return predicted_probas.detach().cpu().numpy()
 

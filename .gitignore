@@ -8,3 +8,4 @@ data/output/*
 .vscode
 .pytest_cache
 runs
+.pylintrc

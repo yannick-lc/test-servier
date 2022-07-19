@@ -7,8 +7,8 @@ import pytest
 import pandas as pd
 import numpy as np
 
-from molecule.prediction.model import FeatureType
-from molecule.representation.dataset import Dataset
+from molecule.preprocess.feature_extraction import FeatureType
+from molecule.preprocess.dataset import Dataset
 
 @pytest.fixture
 def example_dataframe():

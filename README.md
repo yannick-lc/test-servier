@@ -12,6 +12,8 @@
 Requires Python 3.7
 *(Python 3.6 has reached end of security support in December 2021, Rdkit, PyTorch etc do not seem well supported with Python 3.6).*
 
+To simply run the project from command line (cf. section *How to run*):
+
 Recommended: create virtual env with Python 3.7 using conda, and activate environment:
 ```bash
 conda create -n servier python=3.7
@@ -21,7 +23,12 @@ conda activate servier
 Install dependencies using pip and install local packages:
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements/prod.txt
+```
+
+If you also want to run the notebooks and modify the code:
+```bash
+pip install -r requirements/dev.txt
 ```
 
 Tested on Ubuntu 22.04 LTS.

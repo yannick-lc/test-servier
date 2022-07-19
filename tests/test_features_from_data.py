@@ -7,8 +7,8 @@ import pytest
 import os
 import numpy as np
 
-from molecule.prediction.model import FeatureType
-from molecule.representation.dataset import Dataset
+from molecule.preprocess.feature_extraction import FeatureType
+from molecule.preprocess.dataset import Dataset
 from molecule.config import get_project_root_directory
 
 def absolute_path(relative_path: str):
