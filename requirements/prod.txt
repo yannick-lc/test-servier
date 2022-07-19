@@ -1,0 +1,30 @@
+attrs==21.4.0
+certifi @ file:///opt/conda/conda-bld/certifi_1655968806487/work/certifi
+cycler==0.11.0
+fonttools==4.34.4
+importlib-metadata==4.12.0
+iniconfig==1.1.1
+joblib==1.1.0
+kiwisolver==1.4.4
+matplotlib==3.5.2
+-e git+ssh://git@github.com/yannick-lc/test-servier.git@59b8099b041f24dbabe69eb70ae21aff85a00d12#egg=molecule
+numpy==1.21.6
+packaging==21.3
+pandas==1.3.5
+Pillow==9.2.0
+pluggy==1.0.0
+py==1.11.0
+pyparsing==3.0.9
+pytest==7.1.2
+python-dateutil==2.8.2
+pytz==2022.1
+rdkit==2022.3.4
+scikit-learn==1.0.2
+scipy==1.7.3
+six==1.16.0
+threadpoolctl==3.1.0
+tomli==2.0.1
+torch==1.12.0
+tqdm==4.64.0
+typing_extensions==4.3.0
+zipp==3.8.1

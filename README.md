@@ -65,7 +65,7 @@ To run tests:
 pytest
 ```
 
-Some of the tests (those in files postfixed with "*from_data.py*") rely on sample data located in *tests/test_data/*.
+Some of the tests (those in *\*_from_data.py* files) rely on sample data located in *tests/test_data/*.
 
 ## About
 
@@ -97,8 +97,6 @@ More metrics, figures and baselines regarding the exploration, training and eval
 
 Things to do if I find some time:
 
-- More documentation
 - Improve model performance, see the end of "*notebooks/3 - Model 2 - SMILE text representation.ipynb*" for more details
-- Create separate requirements for production (train or run model from command line) and developement (explore baseline in Jupyter notebooks etc)
 - Better unit test coverage
 - Dockerization
