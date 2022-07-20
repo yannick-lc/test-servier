@@ -43,12 +43,12 @@ docker run -it -v path/to/data:/app/data yannicklc/servier:0.0.1 /bin/bash
 Simply replace *path/to/data* with the path to the dataset on your local drive.
 (A dataset split into training and testing sets is available in *data/*).
 
-Once connected to the shell, steps to run the model are detailed in the following section.
-
 Alternatively, build the Docker image locally:
 ```bash
 docker build -t servier:0.0.1 .
 ```
+
+Once connected to the shell, steps to run the model are detailed in the following section.
 
 ## Run the model
 
