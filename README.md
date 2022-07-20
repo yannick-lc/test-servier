@@ -37,10 +37,10 @@ pip install -r requirements/dev.txt
 
 You can directly download and run a Docker container with the model(s) with:
 ```bash
-docker run -it -v path/to/data:/app/data yannicklc/servier:0.0.1 /bin/bash
+docker run -it -v /path/to/data:/app/data yannicklc/servier:0.0.1 /bin/bash
 ```
 
-Simply replace *path/to/data* with the path to the dataset on your local drive.
+Simply replace */path/to/data* with the path to the dataset on your local drive.
 (A dataset split into training and testing sets is available in *data/*).
 
 Alternatively, build the Docker image locally:
